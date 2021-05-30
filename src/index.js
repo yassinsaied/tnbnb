@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'bootswatch/dist/quartz/bootstrap.css'
+import 'bootswatch/dist/minty/bootstrap.css'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'

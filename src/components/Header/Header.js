@@ -6,7 +6,7 @@ import "./Header.css"
    
 
 const Header = () => {
-  return <div className="site-navbar container">
+  return <div className="site-navbar container bkg-trs ">
 
 
  <nav className="navbar navbar-expand-lg ">
@@ -18,7 +18,7 @@ const Header = () => {
     </button>
 
     <div className="collapse navbar-collapse" id="navbarColor03">
-      <ul class="navbar-nav ms-auto">
+      <ul className="navbar-nav ms-auto">
         <li className="nav-item">
           <Link className="nav-link active" to="#">Home
             <span className="visually-hidden">(current)</span>
@@ -44,13 +44,17 @@ const Header = () => {
           </div>
         </li> */}
 
-        <li className="nav-item ms-3 ">
+        <li className="nav-item ms-2 ">
         <Link className="nav-link brl" to="#">login</Link>
       
         </li>
 
         <li className="nav-item">
           <Link className="nav-link" to="#">Rgister</Link>
+        </li>
+
+        <li className="nav-item">
+        <Link  className="btn btn-success" to="#">+ Post an AD</Link>
         </li>
       </ul>
      

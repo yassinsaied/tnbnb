@@ -1,18 +1,23 @@
 import React from 'react'
 import { HashRouter } from 'react-router-dom'
 import Header from './components/Header/Header'
-import Cover from './components/Cover/Cover'
+import HomeContainer from './components/HomeContainer/HomeContainer'
+
 
 import './App.css'
 
 function App() {
   return (
-    <>
+    <div style={{ 
+      backgroundImage: `url(${process.env.PUBLIC_URL + 'img/hotel_demo_48.jpg'})`}} className="site-blocks-cover">
       <HashRouter>
         <Header />
-        <Cover/>
+        <div className="container main">
+        <HomeContainer/>
+        </div>
+              
       </HashRouter>
-    </>
+    </div>
   )
 }
 

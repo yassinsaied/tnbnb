@@ -1,5 +1,5 @@
 .site-navbar {
-    background: #3e3058;
+    
     margin-bottom: 0px;
     z-index: 1999;
     position: absolute;
@@ -9,12 +9,14 @@
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
     width: 100%;
-    opacity: 0.7;
-    border-radius: 5px;
+   
+  
 }
 
 .site-navbar nav {
-    padding: 20px 30px !important;
+  padding-top: 0px;
+  padding-bottom: 0px;
+   
 }
 
 .brl {
@@ -25,4 +27,11 @@
     padding-top: 0;
     padding-bottom: 0px;
     color: #fff;
+}
+
+.nav-item .btn {
+    padding: 7px 10px;
+    border-radius: 0 !important;
+    display: inline;
+
 }
