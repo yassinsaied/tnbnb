@@ -1,25 +1,24 @@
 body {
-  background: #fff;
+    background: #fff;
 }
 
 .container {
-  padding: 20px 30px;
+    padding: 20px 30px;
 }
 
 .main {
-  padding-top: 100px;
+    padding-top: 150px;
 }
 
 .site-blocks-cover {
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 600px;
-  height: calc(100vh);
-  background-position: 20% -25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 600px;
+    height: calc(100vh);
+    background-position: 20% -25px;
 }
 
 .bkg-trs {
-
     border-radius: 5px;
-    background-color:rgba(103, 65, 114, .7);
+    background-color: rgba(103, 65, 114, .7);
 }
