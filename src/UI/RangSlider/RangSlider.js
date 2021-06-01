@@ -36,7 +36,7 @@ export default function RangeSlider() {
         aria-labelledby="range-slider"
         min={0}
         max={2000}
-        step={100}
+        step={50}
         marks={val}
      
        

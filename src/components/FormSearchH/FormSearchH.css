@@ -3,6 +3,14 @@
 }
 
 .form-serch-home .form-control {
-    padding: 11px 10px;
-    border-radius: 0;
+    padding: 7px 10px;
+    border-radius: 0.25rem!important;
+}
+
+.form-serch-home {
+    --bs-gutter-x: 0.5rem;
+}
+.btnsrch{
+
+    text-align: center;
 }
