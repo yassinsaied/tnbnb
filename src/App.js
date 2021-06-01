@@ -3,21 +3,33 @@ import { HashRouter } from 'react-router-dom'
 import Header from './components/Header/Header'
 import HomeContainer from './components/HomeContainer/HomeContainer'
 
-
 import './App.css'
 
 function App() {
   return (
-    <div style={{ 
-      backgroundImage: `url(${process.env.PUBLIC_URL + 'img/hotel_demo_48.jpg'})`}} className="site-blocks-cover">
+   
+    <div
+      style={{
+        backgroundImage: `url(${
+          process.env.PUBLIC_URL + 'img/imageonline-co-darkenimage.jpg'
+        }) `,
+      
+        
+    
+      }}
+      className="site-blocks-cover"
+    >
+
+<div className="site-opacity"></div>
       <HashRouter>
         <Header />
         <div className="container main">
-        <HomeContainer/>
+          <HomeContainer />
         </div>
-              
-      </HashRouter>
+      </HashRouter>{' '}
     </div>
+
+  
   )
 }
 

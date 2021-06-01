@@ -1,8 +1,46 @@
+.form-row-home {
+    padding: 20px 20px;
+    animation-name: fadeInOutForm, moveTopForm300px;
+    animation-duration: 2.5s, 5s;
+    position: relative;
+}
+
+@keyframes fadeInOutForm {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes moveTopForm300px {
+    from {
+        top: 200px;
+        display: none;
+    }
+    to {
+        top: 0px;
+        display: block;
+    }
+}
+
 .form-serch-home .col {
     padding-right: 10px;
 }
 
 .form-serch-home .form-control {
-    padding: 11px 10px;
-    border-radius: 0;
+    padding: 7px 10px;
+    border-radius: 0.25rem!important;
+}
+
+.form-serch-home {
+    --bs-gutter-x: 0.5rem;
+}
+
+.btnsrch {
+    text-align: center;
 }
