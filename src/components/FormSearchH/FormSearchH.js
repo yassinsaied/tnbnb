@@ -13,7 +13,7 @@ const FormSearchH = () =>{
 
 <form className="d-flex form-serch-home">
 
-  <div className="col-sm-3 col-md-3 col-lg-4 ">
+  <div className="col-sm-3 col-md-3 col-lg-3 ">
     <input type="text" className="form-control" placeholder="City" aria-label="City"/>
   </div>
   <div className="col-sm-3 col-md-3 col-lg-2">
@@ -22,11 +22,13 @@ const FormSearchH = () =>{
   <div className="col-sm-3 col-md-3 col-lg-2 ">
     <input type="text" className="form-control" placeholder="Zip" aria-label="Zip"/>
   </div>
-  <div className="col-sm-3 ol-md-3 col-lg-2 ">
+  <div className="ps-3 pe-3 col-sm-3 ol-md-3 col-lg-2 ">
+  
+
   <RangSlider/>
   
   </div>
-  <div className="col-sm-3 col-md-3 col-lg-2"><button type="button" className="btn btn-success">Success</button></div>
+  <div className="ps-3 pe-3 col-sm-3 col-md-3 col-lg-2"><button type="button" className="btn btn-success">Success</button></div>
 
 </form>
 
