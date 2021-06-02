@@ -3,6 +3,7 @@
     animation-name: fadeInOutForm, moveTopForm300px;
     animation-duration: 2.5s, 5s;
     position: relative;
+    margin-bottom: 120px;
 }
 
 @keyframes fadeInOutForm {

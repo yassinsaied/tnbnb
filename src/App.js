@@ -26,7 +26,7 @@ function App() {
         <div className="container main">
           <HomeContainer />
         </div>
-      </HashRouter>{' '}
+      </HashRouter>
     </div>
 
   

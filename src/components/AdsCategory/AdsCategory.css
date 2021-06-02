@@ -1,0 +1,50 @@
+.overlap-category {
+  z-index: 20;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  height: 180px;
+  padding: 0px;
+}
+
+.overlap-category .cat {
+  height: 100%;
+  padding: 0;
+}
+.popular-category {
+  background: #fff;
+  display: block;
+  text-align: center;
+  padding: 30px 10px;
+  border-radius: 7px;
+  top: 0;
+  position: relative;
+  height: 100%;
+}
+.popular-category:hover {
+  background: rgba(103, 65, 114, 1);
+  -webkit-box-shadow: 0 5px 30px -5px rgba(103, 65, 114 , 1);
+  box-shadow: 0 5px 30px -5px rgba(103, 65, 114 ,1);
+  top: -10px;
+  color: #fff;
+}
+
+.popular-category svg {
+  font-size: 45px;
+  margin-bottom: 5px;
+}
+
+.caption {
+  letter-spacing: normal;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.number {
+  padding: 2px 20px;
+  border-radius: 30px;
+  display: inline-block;
+  background: #e9ecef;
+  color: #000;
+  font-size: 14px;
+}
