@@ -8,7 +8,7 @@ import "./AdsCategory.css";
 
 const AdsCategory = () => {
   return (
-    <div className="row overlap-category no-gutters">
+    <div className="row overlap-category no-gutters mb-5">
       <div className="cat col-sm-6 col-md-4 mb-4 mb-lg-0 col-lg-2">
         <div className="popular-category">
           <FontAwesomeIcon icon={faFortAwesome} />

@@ -1,0 +1,62 @@
+
+.card-ad .card {
+    box-shadow: 0 2px 20px -2px rgb(0 0 0 / 10%);
+}
+
+.card-ad .card:hover {
+    box-shadow: 0 5px 39px -14px rgb(0 0 0 / 50%);
+}
+
+
+.card-ad .card-img {
+    position: relative;
+    display: block;
+    background: #ffffff;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 100%;
+    height: auto;
+}
+
+
+.card-ad .card-img-top {
+    transition: all 0.3s linear 0s;
+    height: 100%;
+    max-height: 250px;
+}
+.card-ad:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-ad .card-img p.price {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+}
+
+.card-ad .card-img p.price span ,.card-ad .card-img p.date-ad span {
+    font-size: 16px;
+    font-weight: 600;
+    background: rgba(103, 65, 114, 1);
+    border-radius: 4px;
+    padding: 3px 7px;
+    color: #fff;
+}
+
+.card-ad .card-img p.date-ad {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+}
+
+.card-ad .card-img p.date-ad span {
+    
+    background-color: #78c2ad;
+    border-color: #78c2ad;
+  
+}
+
+
