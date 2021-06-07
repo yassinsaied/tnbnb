@@ -1,0 +1,25 @@
+.pagination{
+
+    text-align: center;
+    margin-top: 20px;
+}
+.page-item {
+    margin: 3px;
+}
+
+.page-item.active .page-link , .page-item:hover .page-link {
+    
+    background: rgba(103, 65, 114, 1);
+    border-color: rgba(103, 65, 114, 1);
+}
+
+
+
+.page-item button{
+    box-sizing: border-box;
+   
+    border-radius: 50% !important;
+    padding-left: .841rem;
+    padding-right: .841rem;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}

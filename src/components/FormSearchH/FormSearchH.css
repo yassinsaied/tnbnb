@@ -6,6 +6,11 @@
     margin-bottom: 120px;
 }
 
+.book-date {
+
+    background-color: #fff;
+}
+
 @keyframes fadeInOutForm {
     0% {
         opacity: 0;
