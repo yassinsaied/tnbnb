@@ -1,19 +1,10 @@
-import React, { useState } from 'react'
-import TextField from '@material-ui/core/TextField'
+import React from 'react'
 import RangSlider from '../../UI/RangSlider/RangSlider'
+import Select from '@material-ui/core/Select';
 import './FormSearchH.css'
-import { Checkbox, Slider } from '@material-ui/core'
 import { useForm, Controller } from 'react-hook-form'
 
 const FormSearchH = () => {
-  //const value = new Date()
-
-  // const [rgval, setRgval] = useState([50, 400])
-
-  // const handleChange = (event, newValue) => {
-  //   setRgval(newValue)
-  // }
-
   
   const val = [
     {
@@ -27,7 +18,7 @@ const FormSearchH = () => {
     },
   ]
 
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control , register } = useForm()
   const onSubmit = (data) => console.log(data)
   return (
     <div className="col-12 bkg-trs form-row-home">
@@ -39,21 +30,21 @@ const FormSearchH = () => {
           <input
             type="text"
             className="form-control"
+            placeholder="Any Text"
+            name ="srtxt"
+            {...register('srtxt')}
+          />
+        </div>
+        <div className="col-sm-3 col-md-3 col-lg-2">
+          <input
+            type="text"
+            className="form-control"
             placeholder="City"
             aria-label="City"
           />
         </div>
 
-        <div className="col-sm-3 col-md-3 col-lg-2">
-          <Controller
-            name="MyCheckbox"
-            control={control}
-            defaultValue={false}
-            render={({ field }) => <Checkbox {...field} />}
-          />
-        </div>
-
-        <section>
+        {/* <section>
           <label>MUI Slider</label>
           <Controller
             name="MUI_Slider"
@@ -65,7 +56,6 @@ const FormSearchH = () => {
             }) => (
               <Slider
               
-            //  onChange={onChange}
               onChange={(_, value)=> onChange(value)}
               defaultValue={[50, 400]}
                 //onChange={handleChange}
@@ -76,7 +66,7 @@ const FormSearchH = () => {
               />
             )}
           />
-        </section>
+        </section> */}
 
         {/* <div className="col-sm-3 col-md-3 col-lg-2">
           <TextField
@@ -95,7 +85,19 @@ const FormSearchH = () => {
           />
         </div> */}
         <div className="ps-3 col-sm-3 ol-md-3 col-lg-2 d-flex">
-          <RangSlider />
+        <Controller
+            name="rangePrice"
+            control={control}
+           
+            render={({
+              field: { onChange, onBlur, value, name, ref },
+              fieldState: { invalid, isTouched, isDirty, error },
+            }) => (
+              <RangSlider changeRange={(_, value)=> onChange(value)} defaultRangeValue={[0, 2000]} maxRange={2000} minRange={0} marksRange={val} stepRange={100}
+                        />
+            )}
+          />
+        
         </div>
         <div className="btnsrch col-sm-3 col-md-3 col-lg-2">
           <button type="submit" className="btn btn-success">
