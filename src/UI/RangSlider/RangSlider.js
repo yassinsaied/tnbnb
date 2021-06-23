@@ -8,12 +8,13 @@ export default function RangeSlider(props) {
     <>
       <Slider
         onChange={props.changeRange}
-        value={props.value}
+        //defaultValue={props.defaultRangeValue}
         valueLabelDisplay="auto"
         max={props.maxRange}
         min={props.minRange}
         step={props.stepRange}
         marks={props.marksRange}
+        value={props.valueRange}
       />
     </>
   )
