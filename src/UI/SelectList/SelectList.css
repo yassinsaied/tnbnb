@@ -1,0 +1,14 @@
+.MuiInputBase-root , .MuiFormControl-root {
+    line-height: 0.8;
+    width: 100%;
+   
+}
+.MuiFormControl-root {
+   
+  
+   
+}
+
+.MuiOutlinedInput-input {
+    padding: 12px 14px 12px 14px !important;
+}

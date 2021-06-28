@@ -1,24 +1,31 @@
-import React from 'react'
-import RangSlider from '../../UI/RangSlider/RangSlider'
-import SelectList from '../../UI/SelectList/SelectList'
-import './FormSearchH.css'
-import { useForm, Controller } from 'react-hook-form'
+import React from "react";
+import RangSlider from "../../UI/RangSlider/RangSlider";
+import SelectList from "../../UI/SelectList/SelectList";
+import "./FormSearchH.css";
+import { useForm, Controller } from "react-hook-form";
+import TextField from '@material-ui/core/TextField';
 
 const FormSearchH = () => {
   const val = [
     {
       value: 0,
-      label: '0€',
+      label: "0€",
     },
 
     {
       value: 2000,
-      label: '2000 €',
+      label: "2000 €",
     },
-  ]
+  ];
 
-  const { handleSubmit, control, register } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const trinityPersons = [
+    { value: "father", label: "Father" },
+    { value: "son", label: "Son" },
+    { value: "spirit", label: "Holy Spirit" },
+  ];
+
+  const { handleSubmit, control, register } = useForm();
+  const onSubmit = (data) => console.log(data);
   return (
     <div className="col-12 bkg-trs form-row-home">
       <form
@@ -26,31 +33,28 @@ const FormSearchH = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="col-sm-3 col-md-3 col-lg-2">
-          <input
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          {/* <input
             type="text"
             className="form-control"
             placeholder="Any Text"
             name="srtxt"
-            {...register('srtxt')}
-          />
+            {...register("srtxt")}
+          /> */}
         </div>
-        <div className="col-sm-3 col-md-3 col-lg-2">
+        <div className="col-sm-3 col-md-4 col-lg-4">
           <Controller
-            name="selectCoutry"
             control={control}
-            defaultValue=""
-            render={({ field}) => (
-
-              <SelectList {...field} optionsSelect={[
-                  { value: "chocolate", label: "Chocolate" },
-                  { value: "strawberry", label: "Strawberry" },
-                  { value: "vanilla", label: "Vanilla" }
-                ]} />
-
-
-                )}
+            name="gov-slect"
+            render={({ field }) => (
+              <SelectList
+                fieldSelect={field}
+                id="gove-select"
+                labelSelect="Choose GOV"
+                optionsSelect={trinityPersons}
+              />
+            )}
           />
-         
         </div>
 
         <div className="ps-3 col-sm-3 ol-md-3 col-lg-2 d-flex">
@@ -77,7 +81,7 @@ const FormSearchH = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default FormSearchH
+export default FormSearchH;

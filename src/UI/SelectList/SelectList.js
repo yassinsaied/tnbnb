@@ -1,16 +1,15 @@
 import React from 'react';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
+import {MenuItem ,Select ,FormControl ,InputLabel} from '@material-ui/core';
+import "./SelectList.css"
 
 
 
 const SelectList = (props) => {
     return (<>
 
-
-        <Select>
+      <FormControl variant="outlined" >
+        <InputLabel id="demo-simple-select-outlined-label">GOV</InputLabel>
+        <Select {...props.fieldSelect} value={props.fieldSelect.value ? props.fieldSelect.value :"" } label={props.labelSelect}>
      
           {props.optionsSelect.map((opt,index)=> {
           
@@ -22,7 +21,7 @@ const SelectList = (props) => {
         
         </Select>
      
-
+        </FormControl>
 
 
     </>);
