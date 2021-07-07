@@ -7,13 +7,19 @@ import "./SelectList.css"
 const SelectList = (props) => {
     return (<>
 
-      <FormControl variant="outlined" >
-        <InputLabel id="demo-simple-select-outlined-label">GOV</InputLabel>
-        <Select {...props.fieldSelect} value={props.fieldSelect.value ? props.fieldSelect.value :"" } label={props.labelSelect}>
+      <FormControl variant="filled" >
+        <InputLabel id="select-gov" >GOV</InputLabel>
+        <Select  {...props.fieldSelect}
+                 value={props.fieldSelect.value ? props.fieldSelect.value :"" }
+                 className={props.classeOverrided.root}
+              
+                
+                 >
+                   
      
           {props.optionsSelect.map((opt,index)=> {
           
-           return  <MenuItem key={index} value={opt.value}>{opt.label}</MenuItem>
+           return  <MenuItem key={index} value={opt.city}>{opt.city}</MenuItem>
 
 
           }) }

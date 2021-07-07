@@ -1,14 +1,14 @@
-.MuiInputBase-root , .MuiFormControl-root {
+ .MuiInputBase-root , .MuiFormControl-root {
     line-height: 0.8;
     width: 100%;
    
 }
-.MuiFormControl-root {
-   
-  
-   
-}
 
+.MuiFilledInput-root.Mui-focused { /* Increase the specificity */
+  background-color: #fff !important;
+  }
+
+/*
 .MuiOutlinedInput-input {
     padding: 12px 14px 12px 14px !important;
-}
+} */
