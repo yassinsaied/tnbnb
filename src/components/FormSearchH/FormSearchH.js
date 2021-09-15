@@ -1,6 +1,11 @@
 import React from "react";
 import RangSlider from "../../UI/RangSlider/RangSlider";
 import SelectList from "../../UI/SelectList/SelectList";
+import TextField from '@mui/material/TextField';
+import DateRangePicker from '@mui/lab/DateRangePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import Box from '@mui/material/Box';
 import "./FormSearchH.css";
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
@@ -77,7 +82,36 @@ const FormSearchH = () => {
           />
         </div>
 
-        <div className="ps-3 col-sm-3 ol-md-3 col-lg-3 d-flex">
+        <div className="ps-3 col-sm-3 col-md-3 col-lg-3 d-flex">
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DateRangePicker
+        startText="Check-in"
+        endText="Check-out"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={(startProps, endProps) => (
+          <React.Fragment>
+            <TextField {...startProps} />
+            <Box sx={{ mx: 2 }}> to </Box>
+            <TextField {...endProps} />
+          </React.Fragment>
+        )}
+      />
+    </LocalizationProvider>
+
+
+
+
+        </div>
+         
+
+
+
+
+        <div className="ps-3 col-sm-3 col-md-3 col-lg-3 d-flex">
           <Controller
             name="rangePrice"
             control={control}
