@@ -1,0 +1,16 @@
+.MuiGrid-spacing-xs-8 > .MuiGrid-item {
+
+     padding: 32px 10px !important;
+}
+
+.MuiDropzonePreviewList-removeButton{
+ top: 40% !important;
+ left :50%;
+ transform: translateX(-50%);
+
+}
+
+.MuiDropzoneArea-root{
+
+    padding: 20px;
+}

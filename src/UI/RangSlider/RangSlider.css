@@ -1,41 +1,47 @@
-.MuiSlider-root {
+.ran-Box .MuiSlider-root {
     color: #56cc9d !important;
 }
 
-.MuiSlider-markLabel {
+/* .MuiSlider-markLabel {
     color: #fff !important;
     font-weight: 700 !important;
-}
+} */
 
-.PrivateValueLabel-circle-4 {
+.ran-Box  .PrivateValueLabel-circle-4 {
     width: 30px !important;
     height: 30px !important;
     border-radius: 5px !important;
 }
 
-.MuiSlider-rail {
+.ran-Box  .MuiSlider-rail {
     height: 9px !important;
     opacity: 1 !important;
     border-radius: 5px !important;
-    background: white !important;
+    background: white ;
 }
 
-.MuiSlider-thumb {
+.ran-Box  .MuiSlider-thumb {
     width: 20px !important;
     height: 20px !important;
     margin-top: -4px !important;
 }
 
-.MuiSlider-track {
+.ran-Box  .MuiSlider-track {
     height: 10px !important;
 }
 
-.MuiSlider-mark {
+.ran-Box  .MuiSlider-mark {
     width: 0px !important;
     height: 0px !important;
 }
 
-.MuiSlider-thumb.Mui-focusVisible,
-.MuiSlider-thumb:hover {
+.ran-Box  .MuiSlider-thumb.Mui-focusVisible,
+.ran-Box  .MuiSlider-thumb:hover {
     box-shadow: 0px 0px 0px 4px rgb(153 153 153 / 64%) !important;
 }
+
+.ran-Box  .MuiBox-root {
+    margin-top: 10px;
+    width: 100%;
+}
+

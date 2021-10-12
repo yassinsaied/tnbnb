@@ -9,38 +9,47 @@ import Pagination from "../../UI/Pagination/Pagination";
 import "./HomeContainer.css";
 
 const HomeContainer = () => {
-  const [lastAds, setLastAds] = useState([]);
+  const [listOfAds, setListOfAds] = useState([]);
   const [totaleItems, setTotalItems] = useState(0);
   const [currentPage, setcurrentPage] = useState(1);
   const itemPerPage = 12;
   useEffect(() => {
-    ServiceAds.findAll(currentPage , itemPerPage)
+    ServiceAds.findAll(currentPage, itemPerPage)
       .then((data) => {
-        setLastAds(data["hydra:member"]);
+        setListOfAds(data["hydra:member"]);
         setTotalItems(data["hydra:totalItems"]);
       })
 
       .catch((error) => console.log(error.response));
   }, [currentPage]);
 
-
   const handelChangePage = (page) => {
-        setcurrentPage(page);
-  }
+    setcurrentPage(page);
+  };
 
   return (
-    <div className="row align-items-center justify-content-center text-center">
-      <TextSlider />
-      <FormSearchH />
-      <AdsCategory />
+    <div
+      style={{
+        backgroundImage: `url(${
+          process.env.PUBLIC_URL + "img/imageonline-co-darkenimage.jpg"
+        }) `,
+      }}
+      className="site-blocks-cover">
+      <div className="container main">
+        <div className="row align-items-center justify-content-center text-center">
+          <TextSlider />
+          <FormSearchH />
+          <AdsCategory />
 
-      <ListAd listAds={lastAds} />
-      <Pagination
-        totaleItems={totaleItems}
-        itemPerPage={itemPerPage}
-        currentPage={currentPage}
-        changedPage={handelChangePage}
-      />
+          <ListAd listAds={listOfAds} />
+          <Pagination
+            totaleItems={totaleItems}
+            itemPerPage={itemPerPage}
+            currentPage={currentPage}
+            changedPage={handelChangePage}
+          />
+        </div>
+      </div>
     </div>
   );
 };

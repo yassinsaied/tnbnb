@@ -1,16 +1,16 @@
-import "date-fns";
 import React, { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import RangSlider from "../../UI/RangSlider/RangSlider";
 import SelectList from "../../UI/SelectList/SelectList";
 import InputText from "../../UI/InputText/InputTerxt";
 import DatePicker from "../../UI/DatePicker/DatePicker";
 import DateFnsUtils from "@date-io/date-fns";
-import "./FormSearchH.css";
 import gov from "../../gov.json";
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -27,22 +27,25 @@ const useStyles = makeStyles({
     marginTop: "10px",
   },
 
-  selectStyle: {
-    backgroundColor: "#fff",
-  },
-  sliderRange: {
-    "&>.MuiSlider-markLabel": {
-      color: "#fff",
-      fontWeight: 700,
-    },
-    "&>.MuiSlider-rail": {
-      backgroundColor: "#fff",
-    },
+  input: {
+    backgroundColor: "#fff !important",
   },
 
-  labelRange: {
-    color: "#fff",
+  sliderRange: {
+    "&>.MuiSlider-markLabel": {
+      color: "rgba(103, 65, 114, .7)",
+      fontWeight: 700,
+    },
+    "&>.MuiSlider-rail" : {
+      backgroundColor:"rgba(103, 65, 114, .7)"
+    }
   },
+   
+  labelRange: {
+  paddingBottom: "5px",
+  paddingLeft: "10px" ,
+  },
+
 });
 
 const val = [
@@ -57,86 +60,62 @@ const val = [
   },
 ];
 
-const FormSearchH = () => {
+const LeftFormSearch = ({searchData}) => {
   const classes = useStyles();
-  const {
-    handleSubmit,
-    control,
-    watch,
-   
-  } = useForm();
+  const {control } = useForm();
   const dateFns = new DateFnsUtils();
-  let history = useHistory();
   const checkInRef = useRef({});
-  checkInRef.current = watch("checkIn", "");
-
-  const onSubmit = (data) => {
-    const newData = {
-      ...data,
-      checkIn: data.checkIn && dateFns.format(data.checkIn, "yyyy-MM-dd"),
-      checkOut: data.checkOut && dateFns.format(data.checkOut, "yyyy-MM-dd"),
-      gte: data.rangePrice[0],
-      lte: data.rangePrice[1],
-    };
-
-    history.push({
-      pathname: "/adresult",
-      state: newData,
-    });
-  };
-
+ 
+ 
   return (
-    <div className="col-12 bkg-trs form-row-home">
-      <form
-        className="d-flex row form-serch-home flex-wrap justify-content-start align-items-center"
-        onSubmit={handleSubmit(onSubmit)}>
-        <div className="col-sm-3 col-md-2 col-lg-2">
+    <>
+  
+ <List
+        component="nav"
+        className={classes.root}
+        aria-label="mailbox folders">
+        <ListItem button>
           <Controller
             name="fastSearch"
             control={control}
-            defaultValue=""
+            defaultValue={searchData !== undefined ? searchData.fastSearch : "" }
             render={({
-              field: { onChange, onBlur, value, name },
-              fieldState: { invalid, isTouched, isDirty, error },
-              formState,
-            }) => (
+               field: { onChange, onBlur, value, name },
+               fieldState: { invalid, isTouched, isDirty, error }, }) => (
               <InputText
                 labelInput="Any text"
-                variantInput="filled"
+                variantInput="outlined"
                 changeInput={onChange}
                 valueInput={value}
                 classesInput={classes}
-                typeInput="text"
-               
               />
             )}
           />
-        </div>
+        </ListItem>
 
-        <div className="col-sm-3 col-md-2 col-lg-2">
+        <ListItem button>
           <Controller
             control={control}
             name="gov"
-            defaultValue="Choos Gov"
+            defaultValue={searchData !== undefined ? searchData.gov : ""}
             render={({ field }) => (
               <SelectList
                 classeOverrided={classes}
                 fieldSelect={field}
                 id="gove-select"
+                labelSelect="Choose GOV"
                 optionsSelect={gov}
-                variantSelect="filled"
-                keyType="city"
-                labelSelect ="Choose Localisation"
+                variantSelect="outlined"
               />
             )}
           />
-        </div>
+        </ListItem>
 
-        <div className="col-sm-3 col-md-2 col-lg-2">
+        <ListItem button>
           <Controller
             control={control}
             name="checkIn"
-            defaultValue={null}
+            defaultValue={  searchData !== undefined  &&(searchData.checkIn !== null ? new Date(searchData.checkIn): null)}
             render={({
               field: { onChange, onBlur, value, name },
               fieldState: { invalid, isTouched, isDirty, error },
@@ -154,13 +133,13 @@ const FormSearchH = () => {
               />
             )}
           />
-        </div>
+        </ListItem>
 
-        <div className="col-sm-3 col-md-2 col-lg-2">
+        <ListItem button>
           <Controller
             control={control}
             name="checkOut"
-            defaultValue={null}
+            defaultValue={ searchData !== undefined  &&(searchData.checkOut !== null ?new Date(searchData.checkOut) : null)}
             render={({
               field: { onChange, onBlur, value, name },
               fieldState: { invalid, isTouched, isDirty, error },
@@ -178,13 +157,13 @@ const FormSearchH = () => {
               />
             )}
           />
-        </div>
+        </ListItem>
 
-        <div className="ps-3 col-sm-3 col-md-2 col-lg-2 d-flex">
+        <ListItem>
           <Controller
             name="rangePrice"
             control={control}
-            defaultValue={[0, 2000]}
+            defaultValue={ searchData !== undefined  ?[searchData.gte, searchData.lte] : ""}
             render={({ field, fieldState }) => (
               <RangSlider
                 valueRange={field.value}
@@ -194,19 +173,14 @@ const FormSearchH = () => {
                 marksRange={val}
                 stepRange={100}
                 classRange={classes}
+                labelVal ="on"
               />
             )}
           />
-        </div>
-
-        <div className="btnsrch col-sm-3 col-md-2 col-lg-2">
-          <button type="submit" className="btn btn-success">
-            Success
-          </button>
-        </div>
-      </form>
-    </div>
+        </ListItem>
+      </List> 
+    </>
   );
 };
 
-export default FormSearchH;
+export default LeftFormSearch;
