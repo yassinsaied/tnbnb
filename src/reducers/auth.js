@@ -3,6 +3,7 @@ import {
   LOGIN_FAIL,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  UPDATE_USER
 } from "../action/types";
 
 const initialState = {
@@ -42,6 +43,12 @@ const loginRegisterReducer = (state = initialState, action) => {
         ...state,
         registred: false,
       };
+
+      case UPDATE_USER:
+        return {
+          ...state,
+          currentUser: action.payload.user,
+        };
 
     default:
       return state;

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -19,8 +21,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DropzoneArea } from "material-ui-dropzone";
 import gov from "../../gov.json";
-import axios from "axios";
 import "./AdPost.css";
+import AdsApi from "../../services/AdsAPI";
+
 const UseStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#f9fafc",
@@ -95,7 +98,6 @@ const type = [
   { type: "Apartement" },
   { type: "Guest Hous" },
   { type: "Motel" },
-  { type: "Trend" },
 ];
 
 const numberRooms = [
@@ -109,33 +111,63 @@ const numberRooms = [
   { numberRooms: "S+8" },
 ];
 
+const renameFile = (fileReq) => {
+  let r = (Math.random() + 1).toString(36).substring(3);
+  let extension = fileReq.type.split("/").pop();
+  return r + "." + extension;
+};
+
 const AdPost = (props) => {
+  const history = useHistory();
   const classes = UseStyles();
+  const { currentUser } = useSelector((state) => state.authReducer);
   const { handleSubmit, control, register } = useForm({
     validateCriteriaMode: "all",
   });
 
-
-  const renameFile = (fileReq) =>{
-    let r = (Math.random() + 1).toString(36).substring(3);
-    let extension = fileReq.type.split("/").pop();
-    return r +"." + extension
-  
-  }
-
   const onSubmit = async (data) => {
-
-    console.log(data);
     const files = data.dropzone;
-    
+    const images = [];
+
+    //iterate through array dropZone file
+
     files.forEach((file, index) => {
-      const newName = renameFile(file) ;
-      const fd = new FormData();
-      fd.append("picture", file , newName );
-      axios
-        .post("http://localhost:4000/picture", fd)
-        .then((res) => console.log(res));
+      //rename image name
+      const newName = renameFile(file);
+
+      //create array of ojects images for ad api
+      let image = {
+        url: newName,
+        titleImage: newName,
+      };
+      images.push(image);
+
+      //upload image in SSR
+      const formData = new FormData();
+      formData.append("picture", file, newName);
+      AdsApi.uploadImage(formData);
     });
+
+    //create data for ad api
+    const ad = {
+      ...data,
+      price: parseFloat(data.price),
+      images: images,
+      author: "/api/users/" + currentUser.id,
+    };
+
+    //create AD after
+
+    AdsApi.addAd(ad)
+      .then((res) => {
+        history.push({
+          pathname: "/profile/" + currentUser.slug,
+          state: { user: res.data },
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -187,8 +219,8 @@ const AdPost = (props) => {
                             message: "Title is required",
                           },
                           maxLength: {
-                            value: 10,
-                            message: "Title must contain Maximum 15 characters",
+                            value: 20,
+                            message: "Title must contain Maximum 20 characters",
                           },
 
                           minLength: {
@@ -223,7 +255,6 @@ const AdPost = (props) => {
                   }) => (
                     <SelectList
                       classeOverrided={classes}
-                      id="gove-select"
                       optionsSelect={type}
                       variantSelect="outlined"
                       keyType="type"
@@ -279,7 +310,7 @@ const AdPost = (props) => {
                             message: "Introduction is required",
                           },
                           maxLength: {
-                            value: 500,
+                            value: 255,
                             message:
                               "Introduction must contain Maximum 255 characters",
                           },
@@ -434,11 +465,10 @@ const AdPost = (props) => {
                   />
                 </Grid>
               </Grid>
+            </Paper>
+          </Grid>
 
-              </Paper>
-              </Grid>
-
-              <Grid item xs={12}>
+          <Grid item xs={12}>
             <Paper elevation={3} className={classes.paperStyle}>
               <Box className={classes.boxTItle}>
                 <FontAwesomeIcon
@@ -466,7 +496,7 @@ const AdPost = (props) => {
 
                   <Controller
                     control={control}
-                    name="location"
+                    name="gov"
                     defaultValue=""
                     render={({
                       field: { onChange, onBlur, value, name },
@@ -483,7 +513,7 @@ const AdPost = (props) => {
                         valueSelect={value}
                         errorSelect={error}
                         refSelect={{
-                          ...register("location", {
+                          ...register("gov", {
                             required: {
                               value: true,
                               message: "Location is required",
@@ -597,7 +627,7 @@ const AdPost = (props) => {
                 </Grid>
                 <Grid>
                   <Controller
-                    name="centerCooling"
+                    name="centralCooling"
                     control={control}
                     defaultValue={false}
                     render={({
@@ -655,7 +685,7 @@ const AdPost = (props) => {
                 </Grid>
                 <Grid>
                   <Controller
-                    name="stunningViews"
+                    name="stunningVieaw"
                     control={control}
                     defaultValue={false}
                     render={({
@@ -770,7 +800,6 @@ const AdPost = (props) => {
                 sm={12}
                 md={12}
                 lg={12}>
-
                 <Controller
                   name="dropzone"
                   control={control}
@@ -788,20 +817,20 @@ const AdPost = (props) => {
                   )}
                 />
 
-
-          <Box  sx={{my:"20px" , mx: "auto"  , display: 'flex' , justifyContent: 'center'}}>
-            <button type="submit" className="btn btn-primary btn-lg px-5">
-              <span> Sign In</span>
-            </button>
-          </Box>
-
-
+                <Box
+                  sx={{
+                    my: "20px",
+                    mx: "auto",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}>
+                  <button type="submit" className="btn btn-primary btn-lg px-5">
+                    <span> Sign In</span>
+                  </button>
+                </Box>
               </Grid>
-
-              
             </Paper>
           </Grid>
-
         </form>
       </Container>
     </>

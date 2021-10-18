@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import { Redirect ,useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { login } from "../../action/auth";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -15,45 +15,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const UseStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "#fff",
-    "&:focus": {
-      backgroundColor: "#fff",
-    },
-    "&:hover": {
-      backgroundColor: "#fff",
-    },
-  },
-
-  centerContainer: {
-    margin: "150px auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  imageGrid: {
+  
+  centerContainer: theme.centerContainer ,
+  gridContainer  : theme.gridContainerFlexCenter,
+  boxContainer   : theme.boxContainer,
+  fontStyle : theme.fontStyle,
+  input : theme.input,
+   imageGrid: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
-  gridContainer: {
-    display: "flex",
-    justifyContent: "center",
-  },
+  
 
-  boxContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  fontStyle: {
-    color: "#78c2ad",
-    marginRight: "10px",
-    "&:hover": {
-      color: "rgba(103, 65, 114, .7)",
-    },
-  },
+ 
 }));
 
 const Login = () => {
@@ -80,7 +55,7 @@ const Login = () => {
 
   return (
     <>
-      {logged && <Redirect to="/" />}
+      {logged && history.goBack()}
 
       <Container maxWidth="lg" className={classes.centerContainer}>
         <Grid item={true} xs={12} sm={12} md={8} lg={10}>
@@ -111,7 +86,7 @@ const Login = () => {
                     className={classes.fontStyle}
                   />
                   <Controller
-                    name="email"
+                    name="username"
                     control={control}
                     defaultValue=""
                     render={({
@@ -127,7 +102,7 @@ const Login = () => {
                         classesInput={classes}
                         errorinput={error}
                         refInput={{
-                          ...register("email", {
+                          ...register("username", {
                             required: {
                               value: true,
                               message: "email is required",

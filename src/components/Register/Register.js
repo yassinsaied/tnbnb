@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 import { registerUser } from "../../action/auth";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,16 +22,6 @@ import CheckBoxInput from "../../UI/CheckBoxInput/CheckBoxInput";
 import Alert from "@material-ui/lab/Alert";
 
 const UseStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "#fff",
-    "&:focus": {
-      backgroundColor: "#fff",
-    },
-    "&:hover": {
-      backgroundColor: "#fff",
-    },
-  },
-
   titleForm: {
     marginBottom: "30px",
     paddingTop: "20px",
@@ -104,6 +95,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const { registred } = useSelector((state) => state.authReducer);
   const { message } = useSelector((state) => state.messageReducer);
+  const { logged } = useSelector((state) => state.authReducer);
 
   const onSubmit = (data) => {
     const newDtata = {
@@ -124,11 +116,11 @@ const Register = () => {
 
   return (
     <>
+      {logged && <Redirect to="/" />}
       <Box p={3}></Box>
       <Container maxWidth="lg" className={classes.centerContainer}>
         <Grid item={true} xs={12} sm={12} md={8} lg={10}>
           <Paper elevation={3}>
-           
             {registred ? (
               <Box pl={3} pb={5} pr={3} pt={5}>
                 <Alert severity="success" className={classes.alertSuccess}>
@@ -138,11 +130,7 @@ const Register = () => {
               </Box>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography
-                  variant="h3"
-                  align="center"
-                  display="block"
-                  className={classes.titleForm}>
+                <Typography variant="h3" align="center" display="block">
                   Sign up
                 </Typography>
 

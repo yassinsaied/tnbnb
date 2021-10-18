@@ -4,10 +4,7 @@ import { useSelector } from "react-redux";
 import "./Header.css";
 
 const Header = () => {
-
-const {logged} = useSelector((state) => state.authReducer)
-
-
+  const { logged } = useSelector((state) => state.authReducer);
 
   return (
     <div className="site-navbar container bkg-trs ">
@@ -63,20 +60,33 @@ const {logged} = useSelector((state) => state.authReducer)
           </div>
         </li> */}
 
-              <li className="nav-item ms-2 ">
-                <Link className="nav-link brl" to="/login">
-                  login
-                </Link>
-              </li>
-
+              {!logged ? (
+                <>
+                  {" "}
+                  <li className="nav-item ms-2 ">
+                    <Link className="nav-link brl" to="/login">
+                      login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">
+                      Rgister
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/register">
+                      My Profile
+                    </Link>
+                  </li>
+                </>
+              )}
               <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Rgister
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="btn btn-success" to={logged ? "/" : "/login" }>
+                <Link
+                  className="btn btn-success"
+                  to={logged ? "/adpost" : "/login"}>
                   + Post ADS
                 </Link>
               </li>

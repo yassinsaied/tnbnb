@@ -5,6 +5,7 @@ import {
   LOGIN_FAIL,
   SET_MESSAGE,
   CLEAR_MESSAGE,
+  UPDATE_USER
 } from "./types";
 
 import AuthApi from "../services/authAPI";
@@ -15,7 +16,7 @@ export const login = (credentials) => (dispatch) => {
       dispatch({
         type: CLEAR_MESSAGE,
       });
-
+    
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
@@ -82,3 +83,32 @@ export const registerUser = (credentials) => (dispatch) => {
       return Promise.reject();
     });
 };
+
+
+export const updateUser=(username) => (dispatch) =>{
+
+  return AuthApi.getUserByEmail(username).then((user)=>{
+    
+    dispatch({
+      type: UPDATE_USER,
+      payload: {
+       user: user["hydra:member"][0],
+       
+      },
+    });
+
+    return Promise.resolve();
+      
+
+  }).catch(()=>{
+
+    dispatch({
+      type: SET_MESSAGE,
+      payload: { message: "User Not Found" },
+    });
+
+
+  })
+
+
+}

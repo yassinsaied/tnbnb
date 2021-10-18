@@ -41,7 +41,7 @@ const HomeContainer = () => {
           <FormSearchH />
           <AdsCategory />
 
-          <ListAd listAds={listOfAds} />
+          <ListAd listAds={listOfAds} titleListe="Featured Ads"/>
           <Pagination
             totaleItems={totaleItems}
             itemPerPage={itemPerPage}
