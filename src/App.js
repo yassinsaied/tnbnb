@@ -14,7 +14,6 @@ import Profile from "./components/Profile/Profile";
 import EditProfile from "./components/Profile/EditeProfile";
 import theme from "./theme/mainTheme"
 
-// Or Create your Own theme:
 
 
 function App() {

@@ -86,6 +86,17 @@ const EditeProfile = (props) => {
 
 
   //  console.log(data)
+  const newUser = {
+    ...data,
+    id : currentUser.id,
+    avatar : data.avatar[0]!== undefined ? data.avatar[0] : currentUser.avatar ,
+  }
+  
+  userService.updateProfileUser(newUser).then((res) => {
+     
+    console.log(res)
+
+  })
 
 
 
