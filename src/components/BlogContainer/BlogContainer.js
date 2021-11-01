@@ -28,7 +28,7 @@ const BlogContainer = () => {
   useEffect(() => {
  
     ServiceAds.searchAdHome(currentPage, itemPerPage, srchData).then((data) => {
-    
+   
       setListOfAds(data["hydra:member"]);
       setTotalItems(data["hydra:totalItems"]);
       

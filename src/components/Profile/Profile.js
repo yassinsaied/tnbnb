@@ -11,7 +11,7 @@ import {
   Avatar,
   ListItem,
   List,
-  CircularProgress,
+  Button
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +20,7 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import ListAd from "../ListAds/ListAds";
+import Pagination from "../../UI/Pagination/Pagination";
 import SkeletonPost from "../../UI/SkeletonPost/SkeletonPost";
 import SkeletonType from "../../UI/SkeletonType/SkeletonType";
 
@@ -32,6 +33,7 @@ const UseStyles = makeStyles((theme) => ({
   gridItem: theme.gridItem,
   fontStyle: theme.fontStyle,
   spinnerStyle: theme.spinnerStyle,
+  button : theme.button,
   paperStyle: {
     ...theme.paperStyle,
     margin: "10px 5px 10px 10px",
@@ -50,21 +52,17 @@ const UseStyles = makeStyles((theme) => ({
   },
 
   skeletonImageStyle: {
-    "&.MuiSkeleton-pulse" : {
-      animation:"none !important"
+    "&.MuiSkeleton-pulse": {
+      animation: "none !important",
     },
-  
-   
   },
 
-  skeletonBox : {
+  skeletonBox: {
     position: "absolute",
     top: "-110px",
     left: "50%",
     transform: "translateX(-50%)",
-
   },
-
 
   boxProfile: {
     position: "relative",
@@ -87,20 +85,46 @@ const UseStyles = makeStyles((theme) => ({
 const Profile = (props) => {
   const classes = UseStyles();
   const slug = props.match.params.slug;
+  const [adsOfUser, setAdsOfUser] = useState([]);
+  const [totaleItems, setTotalItems] = useState(0);
+  const [currentPage, setcurrentPage] = useState(1);
   const [userProfile, setUserProfile] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+  const [loadingPost, setLoadingPost] = useState(true);
   const { currentUser } = useSelector((state) => state.authReducer);
+  const itemPerPage = 6;
 
+  //set CurrentPage of pagination
+  const handelChangePage = (page) => {
+    setcurrentPage(page);
+  };
+
+  //get User by Slug
   useEffect(() => {
-    userService.getUserBySlug(slug).then((res) => {
-      console.log(res);
-      setTimeout(() => {
-        setUserProfile(res["hydra:member"][0]);
-       setLoading(false);
-      }, 1500);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+    userService
+      .getUserBySlug(slug)
+      .then((res) => {
+        let userId = res["hydra:member"][0].id;
+        setTimeout(() => {
+          setUserProfile(res["hydra:member"][0]);
+          setLoadingProfile(false);
+        }, 1500);
+      
+        return userId;
+      })
+      .then((userId) => {
+        setLoadingPost(true);
+        userService
+          .getAdsOfUser(userId, itemPerPage, currentPage)
+          .then((data) => {
+            setTimeout(() => {
+              setAdsOfUser(data["hydra:member"]);
+              setTotalItems(data["hydra:totalItems"]);
+              setLoadingPost(false);
+            }, 1500);
+          });
+      });
+  }, [slug, currentPage]); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -115,16 +139,30 @@ const Profile = (props) => {
           <Grid item={true} xs={12} sm={12} md={4} lg={3}>
             <Paper elevation={3} className={classes.paperStyle}>
               <Box className={classes.boxProfile}>
-                {loading ? (<>
-                  <SkeletonType variant="circle" nubrSkeleton={1} width={200} height={200} style={classes.skeletonBox}/>
-                  <SkeletonType variant="rect" nubrSkeleton={2} width={210} height={118}/></>
+                {loadingProfile ? (
+                  <>
+                    <SkeletonType
+                      variant="circle"
+                      nubrSkeleton={1}
+                      width={200}
+                      height={200}
+                      style={classes.skeletonBox}
+                    />
+                    <SkeletonType
+                      variant="rect"
+                      nubrSkeleton={2}
+                      width={210}
+                      height={118}
+                    />
+                  </>
                 ) : (
                   <>
                     <Avatar
                       className={classes.avatarStyle}
                       alt="Remy Sharp"
-                      src="https://demos.creative-tim.com/argon-dashboard-react/static/media/team-4-800x800.99c612eb.jpg"
+                      src={`${process.env.PUBLIC_URL}avatars/${userProfile.avatar}`}
                     />
+
                     <Typography variant="h5" align="center">
                       {userProfile.firstName + " " + userProfile.lastName}
                     </Typography>
@@ -170,6 +208,14 @@ const Profile = (props) => {
                         </Typography>
                       </ListItem>
                     </List>
+                    {userProfile.id === currentUser.id && (
+                  <Box  align="center" >
+
+                    <Button variant="contained" color="primary" className={classes.button}>
+                      Edite My Profile
+                    </Button>
+                    </Box>
+                    )}
                   </>
                 )}
               </Box>
@@ -178,7 +224,7 @@ const Profile = (props) => {
 
           <Grid item={true} xs={12} sm={12} md={9} lg={9}>
             <Paper elevation={3} className={classes.paperStyle}>
-              {loading ? (
+              {loadingPost ? (
                 <Grid
                   item
                   sm={12}
@@ -188,10 +234,18 @@ const Profile = (props) => {
                   <SkeletonPost nubrSkeleton={9} />
                 </Grid>
               ) : (
-                <ListAd
-                  listAds={userProfile.ads}
-                  titleListe={`You Have ${userProfile.ads.length} Post`}
-                />
+                <>
+                  <ListAd
+                    listAds={adsOfUser}
+                    titleListe={`You Have ${totaleItems} Post`}
+                  />
+                  <Pagination
+                    totaleItems={totaleItems}
+                    itemPerPage={itemPerPage}
+                    currentPage={currentPage}
+                    changedPage={handelChangePage}
+                  />
+                </>
               )}
             </Paper>
           </Grid>

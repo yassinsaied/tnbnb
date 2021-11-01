@@ -1,6 +1,5 @@
 import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { v4 } from "node-uuid";
 import { Box } from "@material-ui/core";
 
 const SelectonPost = (props) => {
@@ -8,7 +7,7 @@ const SelectonPost = (props) => {
   for (let index = 1; index <= props.nubrSkeleton; index++) {
     arrayNbrs.push(index);
   }
-console.log(v4());
+
   return (
     <>
       {arrayNbrs.map((index, number) => {

@@ -16,6 +16,7 @@ const HomeContainer = () => {
   useEffect(() => {
     ServiceAds.findAll(currentPage, itemPerPage)
       .then((data) => {
+    
         setListOfAds(data["hydra:member"]);
         setTotalItems(data["hydra:totalItems"]);
       })

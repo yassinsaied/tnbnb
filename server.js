@@ -40,6 +40,36 @@ app.post("/picture", async (req, res) => {
   }
 })
 
+
+
+
+
+
+
+app.post("/avatar", async (req, res) => {
+  try {
+    if(!req.files){
+      res.send({
+        status: false,
+        message: "No files"
+      })
+    } else {
+      const {avatar} = req.files
+      console.log(avatar.name)
+   
+      avatar.mv("./public/avatars/" + avatar.name)
+
+      res.send({
+        status: true,
+        message: avatar
+      })
+    }
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+
 const port = process.env.PORT || 4000
 
 app.listen(port, () => console.log(`Server is running on port ${port}`))

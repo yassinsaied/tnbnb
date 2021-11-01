@@ -5,6 +5,7 @@ import "./Header.css";
 
 const Header = () => {
   const { logged } = useSelector((state) => state.authReducer);
+  const { slug } = useSelector((state) => state.authReducer.currentUser);
 
   return (
     <div className="site-navbar container bkg-trs ">
@@ -77,7 +78,7 @@ const Header = () => {
               ) : (
                 <>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/register">
+                    <Link className="nav-link" to={`/profile/${slug}`}>
                       My Profile
                     </Link>
                   </li>

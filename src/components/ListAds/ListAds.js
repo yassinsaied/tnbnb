@@ -5,7 +5,6 @@ const ListAd = ({ listAds , titleListe }) => {
   
   return (
 
-
     <div className="row list-ads">
       <h3 className="pb-2"> {titleListe}</h3>
       {listAds !== null &&
