@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Container,
@@ -10,7 +10,7 @@ import {
   IconButton,
   TextField,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import InputText from "../../UI/InputText/InputTerxt";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import userService from "../../services/authAPI";
+import { updateUser } from "../../action/auth";
 
 const UseStyles = makeStyles((theme) => ({
   centerContainer: {
@@ -68,50 +69,39 @@ const renameFile = (fileReq) => {
   return r + "." + extension;
 };
 
-
-
-
-
 const EditeProfile = (props) => {
   const classes = UseStyles();
   const { currentUser } = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch();
   const { handleSubmit, control, register } = useForm();
   const [avatarImage, setAvatarImage] = useState(
     `${process.env.PUBLIC_URL}avatars/${currentUser.avatar}`
   );
-  
+
   const avatarImageField = register("avatar");
   const onSubmit = (data) => {
-   
+    let nameAvatar = currentUser.avatar;
+    if (data.avatar[0] !== undefined) {
+      nameAvatar = renameFile(data.avatar[0]);
+    }
 
+    const newUser = {
+      ...data,
+      id: currentUser.id,
+      avatar: nameAvatar,
+    };
+    console.log(data.avatar[0]);
 
-  //  console.log(data)
-  const newUser = {
-    ...data,
-    id : currentUser.id,
-    avatar : data.avatar[0]!== undefined ? data.avatar[0] : currentUser.avatar ,
-  }
-  
-  userService.updateProfileUser(newUser).then((res) => {
-     
-    console.log(res)
+    userService.updateProfileUser(newUser).then((res) => {
+      dispatch(updateUser(res.data));
 
-  })
-
-
-
-  //upload image in SSR
-  if(data.avatar[0]!== undefined){
-  const newName = renameFile(data.avatar[0]);
-  const formData = new FormData();
-  formData.append("avatar", data.avatar[0], newName);
-  userService.uploadAvatar(formData);
-}
-
-
-
-
-
+      //upload image in SSR
+      if (data.avatar[0] !== undefined) {
+        const formData = new FormData();
+        formData.append("avatar", data.avatar[0], nameAvatar);
+        userService.uploadAvatar(formData);
+      }
+    });
   };
 
   const handleChangeFile = (event) => {
@@ -413,7 +403,7 @@ const EditeProfile = (props) => {
                 type="file"
                 {...avatarImageField}
                 onChange={(event) => {
-                  avatarImageField.onChange(event)
+                  avatarImageField.onChange(event);
                   handleChangeFile(event);
                 }}
               />

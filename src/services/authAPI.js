@@ -1,5 +1,6 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import {loadState} from "../localStorage"
 
 const API_USERS_URL = "http://127.0.0.1:8000/api/users";
 const API_CHECK_lOGIN_URL = "http://127.0.0.1:8000/api/";
@@ -45,7 +46,7 @@ const loginService = (credentials) => {
     .then((response) => {
       //window.localStorage.setItem("authToken", response.data.token);
       axios.defaults.headers["Authorization"] = "Bearer " + response.data.token;
-      console.log( response.data.token)
+     
       return response.data.token;
     })
     .then((token) => {
@@ -80,7 +81,12 @@ function uploadAvatar(formDataPictres)  {
 
 //Update user Profile
 function updateProfileUser (user) {
+ const state = loadState();
+ const {token} =  state.authReducer
+ if(token){
+  axios.defaults.headers.common['Authorization'] =`Bearer ${token}`;
   return axios.put(API_USERS_URL+ "/" +user.id , user)
+ }
 }
 
 

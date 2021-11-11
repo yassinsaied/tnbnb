@@ -10,6 +10,7 @@ const initialState = {
   currentUser: {},
   logged: false,
   registred: false,
+  token : null
 };
 
 const loginRegisterReducer = (state = initialState, action) => {
@@ -24,6 +25,7 @@ const loginRegisterReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload.user,
         logged: !state.logged,
+        token : action.payload.token
       };
     case LOGIN_FAIL:
       return {

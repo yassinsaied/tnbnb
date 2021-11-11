@@ -85,30 +85,17 @@ export const registerUser = (credentials) => (dispatch) => {
 };
 
 
-export const updateUser=(username) => (dispatch) =>{
-
-  return AuthApi.getUserByEmail(username).then((user)=>{
+export const updateUser=(user) => (dispatch) =>{
     
     dispatch({
       type: UPDATE_USER,
       payload: {
-       user: user["hydra:member"][0],
+       user: user,
        
       },
-    });
-
-    return Promise.resolve();
       
-
-  }).catch(()=>{
-
-    dispatch({
-      type: SET_MESSAGE,
-      payload: { message: "User Not Found" },
     });
 
-
-  })
 
 
 }

@@ -18,7 +18,7 @@ import theme from "./theme/mainTheme"
 
 function App() {
   const userState = useSelector((state) => state.authReducer);
-
+  
   return (
     <MuiThemeProvider theme={theme}>
       <HashRouter>
