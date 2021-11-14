@@ -34,6 +34,7 @@ const UseStyles = makeStyles((theme) => ({
   boxContainer: theme.boxContainer,
   fontStyle: theme.fontStyle,
   gridEditProfile: theme.gridEditProfile,
+  button: theme.button,
   boxProfile: {
     position: "relative",
     width: "220px",
@@ -113,7 +114,7 @@ const EditeProfile = (props) => {
     <>
       <Container maxWidth="lg" className={classes.centerContainer}>
         <Grid item={true} xs={12} sm={12} md={8} lg={10}>
-          <Paper elevation={3} className={classes.gridContainer}>
+          <Paper elevation={3} >
             <Grid item={true} xs={12} sm={12} md={12} lg={12}>
               <Box p={3} className={classes.boxProfile}>
                 <label

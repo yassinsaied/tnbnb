@@ -10,17 +10,16 @@ const RangeSlider = (props)=> {
     
     <div className="ran-Box">
     <Box >
-    <InputLabel className={props.classRange.labelRange} >Price</InputLabel>
+    <InputLabel className={props.classeRange} >Price</InputLabel>
   
       <Slider
         onChange={props.changeRange}
-       
         max={props.maxRange}
         min={props.minRange}
         step={props.stepRange}
         marks={props.marksRange}
         value={props.valueRange}
-        className={props.classRange.sliderRange}
+        className={props.classeRange}
         valueLabelDisplay={props.labelVal}
       />
       </Box>

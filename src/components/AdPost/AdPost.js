@@ -20,7 +20,7 @@ import {
   faImages,
 } from "@fortawesome/free-solid-svg-icons";
 import { DropzoneArea } from "material-ui-dropzone";
-import gov from "../../gov.json";
+import {typeAd , numberRooms , gov} from "../../helpres/const"
 import "./AdPost.css";
 import AdsApi from "../../services/AdsAPI";
 
@@ -92,24 +92,7 @@ const UseStyles = makeStyles((theme) => ({
   },
 }));
 
-const type = [
-  { type: "Villa" },
-  { type: "Villa Floor" },
-  { type: "Apartement" },
-  { type: "Guest Hous" },
-  { type: "Motel" },
-];
 
-const numberRooms = [
-  { numberRooms: "S+0" },
-  { numberRooms: "S+1" },
-  { numberRooms: "S+3" },
-  { numberRooms: "S+4" },
-  { numberRooms: "S+5" },
-  { numberRooms: "S+6" },
-  { numberRooms: "S+7" },
-  { numberRooms: "S+8" },
-];
 
 const renameFile = (fileReq) => {
   let r = (Math.random() + 1).toString(36).substring(3);
@@ -129,25 +112,6 @@ const AdPost = (props) => {
     const files = data.dropzone;
     const images = [];
 
-    //iterate through array dropZone file
-
-    files.forEach((file, index) => {
-      //rename image name
-      const newName = renameFile(file);
-
-      //create array of ojects images for ad api
-      let image = {
-        url: newName,
-        titleImage: newName,
-      };
-      images.push(image);
-
-      //upload image in SSR
-      const formData = new FormData();
-      formData.append("picture", file, newName);
-      AdsApi.uploadImage(formData);
-    });
-
     //create data for ad api
     const ad = {
       ...data,
@@ -156,7 +120,7 @@ const AdPost = (props) => {
       author: "/api/users/" + currentUser.id,
     };
 
-    //create AD after
+    //create AD and upload images
 
     AdsApi.addAd(ad)
       .then((res) => {
@@ -164,6 +128,26 @@ const AdPost = (props) => {
           pathname: "/profile/" + currentUser.slug,
           state: { user: res.data },
         });
+
+        //iterate through array dropZone file
+        if (files.length !== 0) {
+          files.forEach((file, index) => {
+            //rename image name
+            const newName = renameFile(file);
+
+            //create array of ojects images for ad api
+            let image = {
+              url: newName,
+              titleImage: newName,
+            };
+            images.push(image);
+
+            //upload image in SSR
+            const formData = new FormData();
+            formData.append("picture", file, newName);
+            AdsApi.uploadImage(formData);
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -255,9 +239,9 @@ const AdPost = (props) => {
                   }) => (
                     <SelectList
                       classeOverrided={classes}
-                      optionsSelect={type}
+                      optionsSelect={typeAd}
                       variantSelect="outlined"
-                      keyType="type"
+                      keyType="typeAd"
                       labelSelect="Choose Type of your AD"
                       errorSelect={error}
                       changeSelect={onChange}
@@ -831,10 +815,6 @@ const AdPost = (props) => {
               </Grid>
             </Paper>
           </Grid>
-
-
-
-
         </form>
       </Container>
     </>

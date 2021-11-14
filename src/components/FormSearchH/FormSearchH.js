@@ -3,62 +3,27 @@ import React, { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
 import RangSlider from "../../UI/RangSlider/RangSlider";
 import SelectList from "../../UI/SelectList/SelectList";
 import InputText from "../../UI/InputText/InputTerxt";
 import DatePicker from "../../UI/DatePicker/DatePicker";
 import DateFnsUtils from "@date-io/date-fns";
 import "./FormSearchH.css";
-import gov from "../../gov.json";
+import { gov , rangeVal} from "../../helpres/const"
 
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: "#fff",
-    "&:focus": {
-      backgroundColor: "#fff",
-    },
-    "&:hover": {
-      backgroundColor: "#fff",
-    },
-  },
-  datePicker: {
-    backgroundColor: "#fff !important",
-    marginTop: "10px",
-  },
+const UseStyles = makeStyles((theme) => ({
 
-  selectStyle: {
-    backgroundColor: "#fff",
-  },
-  sliderRange: {
-    "&>.MuiSlider-markLabel": {
-      color: "#fff",
-      fontWeight: 700,
-    },
-    "&>.MuiSlider-rail": {
-      backgroundColor: "#fff",
-    },
-  },
+   textFiled : theme.textFiled,
+   selectStyle : theme.selectStyle,
+   datePicker : theme.datePicker,
+   sliderRange : theme.sliderRange
 
-  labelRange: {
-    color: "#fff",
-  },
-});
+}));
 
-const val = [
-  {
-    value: 0,
-    label: "0€",
-  },
 
-  {
-    value: 2000,
-    label: "2000 €",
-  },
-];
 
 const FormSearchH = () => {
-  const classes = useStyles();
+  const classes = UseStyles();
   const {
     handleSubmit,
     control,
@@ -71,6 +36,7 @@ const FormSearchH = () => {
   checkInRef.current = watch("checkIn", "");
 
   const onSubmit = (data) => {
+   
     const newData = {
       ...data,
       checkIn: data.checkIn && dateFns.format(data.checkIn, "yyyy-MM-dd"),
@@ -78,7 +44,7 @@ const FormSearchH = () => {
       gte: data.rangePrice[0],
       lte: data.rangePrice[1],
     };
-
+   
     history.push({
       pathname: "/adresult",
       state: newData,
@@ -105,7 +71,7 @@ const FormSearchH = () => {
                 variantInput="filled"
                 changeInput={onChange}
                 valueInput={value}
-                classesInput={classes}
+                classesInput={classes.textFiled}
                 typeInput="text"
                
               />
@@ -117,16 +83,20 @@ const FormSearchH = () => {
           <Controller
             control={control}
             name="gov"
-            defaultValue="Choos Gov"
-            render={({ field }) => (
+            defaultValue={null}
+            render={({
+              field: { onChange, onBlur, value, name },
+              fieldState: { invalid, isTouched, isDirty, error },
+            }) => (
               <SelectList
-                classeOverrided={classes}
-                fieldSelect={field}
+                classeSelect={classes.selectStyle}
+                changeSelect={onChange}
+                valueSelect={value}
                 id="gove-select"
                 optionsSelect={gov}
                 variantSelect="filled"
                 keyType="city"
-                labelSelect ="Choose Localisation"
+                labelSelect ="Location"
               />
             )}
           />
@@ -148,7 +118,7 @@ const FormSearchH = () => {
                 idPicker="date-check-in"
                 changeDate={onChange}
                 valueDate={value}
-                classDate={classes}
+                classeDate={classes.datePicker}
                 DateFn={DateFnsUtils}
                 minCheckIn={new Date()}
               />
@@ -172,7 +142,7 @@ const FormSearchH = () => {
                 idPicker="date-check-out"
                 changeDate={onChange}
                 valueDate={value}
-                classDate={classes}
+                classeDate={classes.datePicker}
                 DateFn={DateFnsUtils}
                 minCheckIn={dateFns.addDays(checkInRef.current, 1)}
               />
@@ -191,9 +161,10 @@ const FormSearchH = () => {
                 changeRange={(_, value) => field.onChange(value)}
                 maxRange={2000}
                 minRange={0}
-                marksRange={val}
+                marksRange={rangeVal}
                 stepRange={100}
-                classRange={classes}
+                classeRange={classes.sliderRange}
+                labelVal ="auto"
               />
             )}
           />

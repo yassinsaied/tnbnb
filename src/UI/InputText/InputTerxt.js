@@ -23,23 +23,20 @@ const InputText = ({
         variant={variantInput}
         value={valueInput}
         onChange={changeInput}
-        className={classesInput.root}
-        InputProps={
-          typeEntry === "price"
-            ? {
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
-              }
-            : null
-        }
+        className={classesInput}
+        InputProps={{
+          className: classesInput,
+          startAdornment:
+            typeEntry === "price" ? (
+              <InputAdornment position="start">$</InputAdornment>
+            ) : null,
+        }}
         type={typeInput}
         name={nameInput}
         inputRef={refInput}
         helperText={errorinput ? errorinput.message : ""}
         rows={rowsInput}
         //multiline
-       
       />
     </>
   );

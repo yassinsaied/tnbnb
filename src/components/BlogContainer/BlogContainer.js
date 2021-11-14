@@ -26,7 +26,7 @@ const BlogContainer = () => {
   const srchData = location.state;
 
   useEffect(() => {
- 
+    console.log(srchData)
     ServiceAds.searchAdHome(currentPage, itemPerPage, srchData).then((data) => {
    
       setListOfAds(data["hydra:member"]);

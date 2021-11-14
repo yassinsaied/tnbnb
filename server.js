@@ -26,9 +26,9 @@ app.post("/picture", async (req, res) => {
       })
     } else {
       const {picture} = req.files
-  
+      
    
-      picture.mv("./uploads/" + picture.name)
+      picture.mv("./public/adimages/" + picture.name)
 
       res.send({
         status: true,
@@ -55,8 +55,7 @@ app.post("/avatar", async (req, res) => {
       })
     } else {
       const {avatar} = req.files
-      console.log(avatar.name)
-   
+     
       avatar.mv("./public/avatars/" + avatar.name)
 
       res.send({

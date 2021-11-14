@@ -1,5 +1,4 @@
 import React from "react";
-import "./DatePicker.css";
 
 import {
   MuiPickersUtilsProvider,
@@ -10,8 +9,7 @@ const DatePicker = (props) => {
   return (
     <>
       <MuiPickersUtilsProvider
-        className={props.classDate.root}
-        utils={props.DateFn}>
+          utils={props.DateFn}>
         <KeyboardDatePicker
           inputVariant="filled"
           margin="normal"
@@ -19,8 +17,8 @@ const DatePicker = (props) => {
           label={props.labelInput}
           format={props.formatDate}
           onChange={props.changeDate}
-          className={props.classDate.datePicker}
-          InputProps={{ className: props.classDate.input }}
+          className={props.classeDate}
+          InputProps={{ className: props.classeDate }}
           value={props.valueDate}
           KeyboardButtonProps={{
             "aria-label": "change date",

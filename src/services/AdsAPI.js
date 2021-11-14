@@ -14,13 +14,15 @@ function findAll(page, itemPerPage) {
 // GET Ads result from form search home
 function searchAdHome(page, itemPerPage, data) {
   let serachUrl = baseUrl + "itemsPerPage=" + itemPerPage + "&page=" + page + "&price[gte]=" + data.gte + "&price[lte]=" + data.lte;
-     
-  if (data.fastSearch !== "") {
+  console.log(data.fastSearch ,data.gov )   
+  if (data.fastSearch !=='') {
     serachUrl += "&search=" + data.fastSearch;
+    console.log("dsdsdsd")   
   }
 
-  if (data.gove !== undefined) {
+  if (data.gov !== null ) {
     serachUrl += "&gov=" + data.gov;
+    console.log("dsdggggggggggggggggsdsd") 
    }                 
    
   return axios.get(serachUrl).then((response)=> response.data);

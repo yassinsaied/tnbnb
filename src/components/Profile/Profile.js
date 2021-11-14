@@ -11,7 +11,7 @@ import {
   Avatar,
   ListItem,
   List,
-  Button
+  Button,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,6 +23,7 @@ import ListAd from "../ListAds/ListAds";
 import Pagination from "../../UI/Pagination/Pagination";
 import SkeletonPost from "../../UI/SkeletonPost/SkeletonPost";
 import SkeletonType from "../../UI/SkeletonType/SkeletonType";
+import { Link } from "react-router-dom";
 
 const UseStyles = makeStyles((theme) => ({
   container: { ...theme.centerContainer, marginTop: "200px" },
@@ -33,7 +34,7 @@ const UseStyles = makeStyles((theme) => ({
   gridItem: theme.gridItem,
   fontStyle: theme.fontStyle,
   spinnerStyle: theme.spinnerStyle,
-  button : theme.button,
+  button: theme.button,
   paperStyle: {
     ...theme.paperStyle,
     margin: "10px 5px 10px 10px",
@@ -109,7 +110,7 @@ const Profile = (props) => {
           setUserProfile(res["hydra:member"][0]);
           setLoadingProfile(false);
         }, 1500);
-      
+
         return userId;
       })
       .then((userId) => {
@@ -209,12 +210,16 @@ const Profile = (props) => {
                       </ListItem>
                     </List>
                     {userProfile.id === currentUser.id && (
-                  <Box  align="center" >
-
-                    <Button variant="contained" color="primary" className={classes.button}>
-                      Edite My Profile
-                    </Button>
-                    </Box>
+                      <Box align="center">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className={classes.button}>
+                          <Link className="nav-link" to="/editprofile">
+                            Edite My Profile
+                          </Link>
+                        </Button>
+                      </Box>
                     )}
                   </>
                 )}
