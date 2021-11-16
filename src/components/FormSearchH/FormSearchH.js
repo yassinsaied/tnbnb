@@ -155,7 +155,7 @@ const FormSearchH = () => {
             name="rangePrice"
             control={control}
             defaultValue={[0, 2000]}
-            render={({ field, fieldState }) => (
+            render={({ field}) => (
               <RangSlider
                 valueRange={field.value}
                 changeRange={(_, value) => field.onChange(value)}

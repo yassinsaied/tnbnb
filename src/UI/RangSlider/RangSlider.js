@@ -9,7 +9,7 @@ const RangeSlider = (props)=> {
   return (
     
     <div className="ran-Box">
-    <Box >
+    <Box  className={props.classeRange}>
     <InputLabel className={props.classeRange} >Price</InputLabel>
   
       <Slider

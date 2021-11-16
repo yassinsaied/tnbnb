@@ -5,10 +5,9 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import LeftFormSearch from "../LeftFormSearch/LeftFormSearch";
 import Pagination from "../../UI/Pagination/Pagination";
-import ServiceAds from "../../services/AdsAPI"
+import ServiceAds from "../../services/AdsAPI";
 import ListAd from "../ListAds/ListAds";
 import "./BlogContainer.css";
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,20 +25,18 @@ const BlogContainer = () => {
   const srchData = location.state;
 
   useEffect(() => {
-    console.log(srchData)
-    ServiceAds.searchAdHome(currentPage, itemPerPage, srchData).then((data) => {
    
-      setListOfAds(data["hydra:member"]);
-      setTotalItems(data["hydra:totalItems"]);
-      
-    })
-     .catch((error) => console.log(error.response));
+    ServiceAds.searchAdHome(currentPage, itemPerPage, srchData)
+      .then((data) => {
+        setListOfAds(data["hydra:member"]);
+        setTotalItems(data["hydra:totalItems"]);
+      })
+      .catch((error) => console.log(error.response));
   }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handelChangePage = (page) => {
     setcurrentPage(page);
   };
-  
 
   return (
     <div className="blog-main">
@@ -52,16 +49,13 @@ const BlogContainer = () => {
           </Grid>
           <Grid item xs={9}>
             <Paper className={classes.paper}>
-               
-               
-              <ListAd listAds ={listOfAds} />  
+              <ListAd listAds={listOfAds} />
               <Pagination
                 totaleItems={totaleItems}
                 currentPage={currentPage}
                 itemPerPage={itemPerPage}
                 changedPage={handelChangePage}
               />
-              
             </Paper>
           </Grid>
         </Grid>

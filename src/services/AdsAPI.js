@@ -2,7 +2,6 @@ import axios from "axios";
 
 const baseUrl = "http://127.0.0.1:8000/api/ads?";
 
-
 // Get all Das
 function findAll(page, itemPerPage) {
   return axios
@@ -10,50 +9,49 @@ function findAll(page, itemPerPage) {
     .then((response) => response.data);
 }
 
-
 // GET Ads result from form search home
 function searchAdHome(page, itemPerPage, data) {
-  let serachUrl = baseUrl + "itemsPerPage=" + itemPerPage + "&page=" + page + "&price[gte]=" + data.gte + "&price[lte]=" + data.lte;
-  console.log(data.fastSearch ,data.gov )   
-  if (data.fastSearch !=='') {
-    serachUrl += "&search=" + data.fastSearch;
-    console.log("dsdsdsd")   
+  let serachUrl;
+  if (data === undefined) {
+    serachUrl = baseUrl + "itemsPerPage=" + itemPerPage + "&page=" + page;
+  } else {
+    serachUrl =
+      baseUrl +
+      "itemsPerPage=" +
+      itemPerPage +
+      "&page=" +
+      page +
+      "&price[gte]=" +
+      data.gte +
+      "&price[lte]=" +
+      data.lte;
+    if (data.fastSearch !== "") {
+      serachUrl += "&search=" + data.fastSearch;
+    }
+
+    if (data.gov !== null) {
+      serachUrl += "&gov=" + data.gov;
+    }
   }
 
-  if (data.gov !== null ) {
-    serachUrl += "&gov=" + data.gov;
-    console.log("dsdggggggggggggggggsdsd") 
-   }                 
-   
-  return axios.get(serachUrl).then((response)=> response.data);
+  return axios.get(serachUrl).then((response) => response.data);
 }
 
-function addAd(ad)  {
-   return axios.post( baseUrl + "ads", ad)
+function addAd(ad) {
+  return axios.post(baseUrl + "ads", ad);
 }
 
-function uploadImage(formDataPictres)  {
-  return axios.post("http://localhost:4000/picture", formDataPictres)
-    
+function uploadImage(formDataPictres) {
+  return axios
+    .post("http://localhost:4000/picture", formDataPictres)
+
     .then((res) => console.log(res));
 }
-
-
-
-
-
-
-
-
-
 
 const exporteAds = {
   findAll,
   searchAdHome,
   addAd,
-  uploadImage
-
-
-
+  uploadImage,
 };
 export default exporteAds;
